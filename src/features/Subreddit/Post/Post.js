@@ -8,9 +8,9 @@ const Post = ({ post }) => {
       <Markdown>
         {post.data.selftext}
       </Markdown>
-      <button>-</button> {post.data.score} <button>+</button>
+      <span>Post score {post.data.score}</span>
       <br />
-      <span>Comments {post.data.num_comments}</span>
+      <span>{post.data.num_comments} Comments</span>
     </div>
   )
 }

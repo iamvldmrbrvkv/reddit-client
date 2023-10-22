@@ -8,7 +8,7 @@ function NavBar() {
       <h1>
         Reddit Client
       </h1>
-      <a href=''>r/reddit</a> | <a href=''>r/help</a> | <a href=''>r/redditdev</a> | <a href=''>r/bugs</a>
+      <span>r/reddit</span> | <span>r/help</span> | <span>r/redditdev</span> | <span>r/bugs</span>
       <SearchReddit />
     </div>
   )

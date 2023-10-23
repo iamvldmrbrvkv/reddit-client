@@ -19,7 +19,7 @@ const Subreddit = () => {
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
-        <p>{error.message}</p>
+        <p>{error}</p>
       ) : (
         <>
           <h2>{subreddit.subreddit}</h2>

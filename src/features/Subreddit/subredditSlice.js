@@ -6,9 +6,13 @@ export const fetchSubreddit = createAsyncThunk(
     try {
       const response = await fetch(`https://www.reddit.com/${endpoint}.json`)
       const json = await response.json()
+      if (response.status !== 200) {
+        const errorMessage = `${response.status}`
+        throw new Error(errorMessage)
+      }
       return json
     } catch (err) {
-      return rejectWithValue(err.response)
+      return rejectWithValue(`${err.name}: ${err.message}`)
     }
   }
 )
@@ -36,7 +40,7 @@ const subredditSlice = createSlice({
       })
       .addCase(fetchSubreddit.rejected, (state, action) => {
         state.loading = false
-        state.error = action.error
+        state.error = action.payload
       })
   }
 })

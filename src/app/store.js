@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import subredditReducer from "../features/Subreddit/subredditSlice";
+import commentsReducer from "../features/Comments/commentsSlice";
 
 const store = configureStore({
   reducer: {
-    subreddit: subredditReducer
+    subreddit: subredditReducer,
+    comments: commentsReducer
   }
 })
 

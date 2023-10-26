@@ -51,4 +51,6 @@ export const isLoading = state => state.subreddit.loading
 
 export const isError = state => state.subreddit.error
 
+export const selectPostById = (state, postId) => state.subreddit.posts.find(post => post.data.id === postId)
+
 export default subredditSlice.reducer

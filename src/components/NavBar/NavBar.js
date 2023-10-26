@@ -10,7 +10,7 @@ function NavBar() {
         Reddit Client
       </h1>
       <NavLink
-        to="r/:subreddit"
+        to={`r/reddit/`}
         className={({ isActive }) =>
           isActive ? "active" : ""
         }
@@ -18,7 +18,7 @@ function NavBar() {
         r/reddit
       </NavLink>
       <NavLink
-        to="r/:subreddit"
+        to={`r/help/`}
         className={({ isActive }) =>
           isActive ? "active" : ""
         }
@@ -26,7 +26,7 @@ function NavBar() {
         r/help
       </NavLink>
       <NavLink
-        to="r/:subreddit"
+        to={`r/redditdev/`}
         className={({ isActive }) =>
           isActive ? "active" : ""
         }
@@ -34,7 +34,7 @@ function NavBar() {
         r/redditdev
       </NavLink>
       <NavLink
-        to="r/:subreddit"
+        to={`r/bugs/`}
         className={({ isActive }) =>
           isActive ? "active" : ""
         }

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectSubreddit, fetchSubreddit, isLoading, isError } from "../subredditSlice";
 import { useEffect } from "react";
 import Posts from "../Posts/Posts";
+import { useParams } from "react-router-dom";
 
 const Subreddit = () => {
   const dispatch = useDispatch()
@@ -9,10 +10,12 @@ const Subreddit = () => {
   const loading = useSelector(isLoading)
   const error = useSelector(isError)
 
+  const {subredditName } = useParams()
+  const reddit = 'reddit/'
+
   useEffect(() => {
-    const enpoint = 'r/reddit/'
-    dispatch(fetchSubreddit(enpoint))
-  }, [dispatch])
+    !subredditName ? dispatch(fetchSubreddit(reddit)) : dispatch(fetchSubreddit(subredditName))
+  }, [dispatch, subredditName])
  
   return (
     <div>

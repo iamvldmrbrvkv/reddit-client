@@ -12,8 +12,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Subreddit />} />
-      <Route path="r/:subreddit" element={<Subreddit />} />
-      <Route path="comments" element={<FullPostWithComments />} />
+      <Route path="r/:subredditName" element={<Subreddit />} />
+      <Route path="r/:subreddit/comments/:id/:title" element={<FullPostWithComments />} />
     </Route>
   )
 )

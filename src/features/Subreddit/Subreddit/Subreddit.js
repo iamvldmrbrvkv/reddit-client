@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectSubreddit, fetchSubreddit, isLoading, isError } from "../subredditSlice";
+import { selectSubreddit, selectPosts, fetchSubreddit, isLoading, isError } from "../subredditSlice";
 import { useEffect } from "react";
 import Posts from "../Posts/Posts";
 import { useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 const Subreddit = () => {
   const dispatch = useDispatch()
   const subreddit = useSelector(selectSubreddit)
-  console.log("POSTS", subreddit.posts)
+  const posts = useSelector(selectPosts)
   const loading = useSelector(isLoading)
   const error = useSelector(isError)
   const { subredditName } = useParams()
@@ -27,7 +27,7 @@ const Subreddit = () => {
         <>
           <h2>{subreddit.subreddit}</h2>
           <p>{subreddit.subreddit_name_prefixed}</p>
-          <Posts posts={subreddit.posts} />
+          <Posts posts={posts} />
         </>
       )}
     </div>

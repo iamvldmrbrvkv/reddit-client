@@ -45,7 +45,9 @@ const subredditSlice = createSlice({
   }
 })
 
-export const selectSubreddit = state => state.subreddit.posts
+export const selectSubreddit = state => state.subreddit
+
+export const selectPosts = state => state.subreddit.posts
 
 export const isLoading = state => state.subreddit.loading
 

@@ -1,18 +1,19 @@
 import logo from '../../reddit-logo.png'
 import SearchReddit from "../SearchReddit/SearchReddit"
 import { NavLink } from 'react-router-dom'
+import styles from './NavBar.module.css'
 
 function NavBar() {
   return (
     <div>
-      <img src={logo} alt='logo'/>
+      <img src={logo} alt='logo' className={styles.img}/>
       <h1>
         Reddit Client
       </h1>
       <NavLink
         to={`r/reddit/`}
         className={({ isActive }) =>
-          isActive ? "active" : ""
+          isActive ? `${styles.active}` : ""
         }
       >
         r/reddit
@@ -20,7 +21,7 @@ function NavBar() {
       <NavLink
         to={`r/help/`}
         className={({ isActive }) =>
-          isActive ? "active" : ""
+          isActive ? `${styles.active}` : ""
         }
       >
         r/help
@@ -28,7 +29,7 @@ function NavBar() {
       <NavLink
         to={`r/redditdev/`}
         className={({ isActive }) =>
-          isActive ? "active" : ""
+          isActive ? `${styles.active}` : ""
         }
       >
         r/redditdev
@@ -36,7 +37,7 @@ function NavBar() {
       <NavLink
         to={`r/bugs/`}
         className={({ isActive }) =>
-          isActive ? "active" : ""
+          isActive ? `${styles.active}` : ""
         }
       >
         r/bugs

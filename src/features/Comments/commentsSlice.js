@@ -18,6 +18,7 @@ export const fetchComments = createAsyncThunk(
 )
 
 const initialState = {
+  postInfo: [],
   comments: [],
   loading: false,
   error: null
@@ -34,6 +35,7 @@ const commentsSlice = createSlice({
       })
       .addCase(fetchComments.fulfilled, (state, action) => {
         state.loading = false
+        state.postInfo = action.payload[0].data.children
         state.comments = action.payload[1].data.children
       })
       .addCase(fetchComments.rejected, (state, action) => {
@@ -43,7 +45,9 @@ const commentsSlice = createSlice({
   }
 })
 
-export const selectComments = state => state.comments
+export const selectPostInfo = state => state.comments.postInfo[0]
+
+export const selectComments = state => state.comments.comments
 
 export const isLoading = state => state.comments.loading
 

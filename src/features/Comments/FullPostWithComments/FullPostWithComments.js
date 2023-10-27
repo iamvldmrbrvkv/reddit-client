@@ -2,21 +2,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectComments, fetchComments, isLoading, isError } from "../commentsSlice";
 import { useEffect } from "react";
 import Comments from "../Comments/Comments";
-import { selectPostById } from "../../Subreddit/subredditSlice";
 import Post from "../../Subreddit/Post/Post";
+import { useParams } from "react-router-dom";
+import { selectPostInfo } from "../commentsSlice";
 
 const FullPostWithComments = () => {
   const dispatch = useDispatch()
   const comments = useSelector(selectComments)
   const loading = useSelector(isLoading)
   const error = useSelector(isError)
-  const postId = 'sphocx'
-  const post = useSelector(state => selectPostById(state, postId))
+  const { subredditName, id, title } = useParams()
+  const post = useSelector(selectPostInfo)
 
   useEffect(() => {
-    const endpoint = 'comments/sphocx/test_post_please_ignore/'
+    const endpoint = `r/${subredditName}/comments/${id}/${title}/`
     dispatch(fetchComments(endpoint))
-  }, [dispatch])
+  }, [dispatch, id, subredditName, title])
 
   return (
     <div>
@@ -27,7 +28,7 @@ const FullPostWithComments = () => {
       ) : (
         <>
           <Post post={post} />
-          <Comments comments={comments.comments} />
+          <Comments comments={comments} />
         </>
       )}
     </div>

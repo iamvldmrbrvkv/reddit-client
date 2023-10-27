@@ -13,7 +13,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Root />}>
       <Route index element={<Subreddit />} />
       <Route path="r/:subredditName" element={<Subreddit />} />
-      <Route path="r/:subreddit/comments/:id/:title" element={<FullPostWithComments />} />
+      <Route path="r/:subredditName/comments/:id/:title" element={<FullPostWithComments />} />
     </Route>
   )
 )

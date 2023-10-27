@@ -7,10 +7,10 @@ import { useParams } from "react-router-dom";
 const Subreddit = () => {
   const dispatch = useDispatch()
   const subreddit = useSelector(selectSubreddit)
+  console.log("POSTS", subreddit.posts)
   const loading = useSelector(isLoading)
   const error = useSelector(isError)
-
-  const {subredditName } = useParams()
+  const { subredditName } = useParams()
   const reddit = 'reddit/'
 
   useEffect(() => {

@@ -1,23 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectComments, fetchComments, isLoading, isError } from "../commentsSlice";
+import { selectSubredditData, selectCommentsData, fetchComments, selectLoading, selectError } from "../commentsSlice";
 import { useEffect } from "react";
 import Comments from "../Comments/Comments";
 import Post from "../../Subreddit/Post/Post";
 import { useParams } from "react-router-dom";
-import { selectPostInfo } from "../commentsSlice";
 
 const FullPostWithComments = () => {
   const dispatch = useDispatch()
-  const comments = useSelector(selectComments)
-  const loading = useSelector(isLoading)
-  const error = useSelector(isError)
-  const { subredditName, id, title } = useParams()
-  const post = useSelector(selectPostInfo)
+  const subredditData = useSelector(selectSubredditData)
+  const commentsData = useSelector(selectCommentsData)
+  const loading = useSelector(selectLoading)
+  const error = useSelector(selectError)
+  const { subreddit, id, title } = useParams()
 
   useEffect(() => {
-    const endpoint = `r/${subredditName}/comments/${id}/${title}/`
+    const endpoint = `r/${subreddit}/comments/${id}/${title}/`
     dispatch(fetchComments(endpoint))
-  }, [dispatch, id, subredditName, title])
+  }, [dispatch, id, subreddit, title])
 
   return (
     <div>
@@ -25,10 +24,10 @@ const FullPostWithComments = () => {
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : (
+      ) : subredditData && (
         <>
-          <Post post={post} />
-          <Comments comments={comments} />
+          <Post post={subredditData} />
+          <Comments comments={commentsData} />
         </>
       )}
     </div>

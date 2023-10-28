@@ -1,21 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectSubreddit, selectPosts, fetchSubreddit, isLoading, isError } from "../subredditSlice";
+import { selectSubredditInfo, selectSubredditData, fetchSubreddit, selectLoading, selectError } from "../subredditSlice";
 import { useEffect } from "react";
 import Posts from "../Posts/Posts";
 import { useParams } from "react-router-dom";
 
 const Subreddit = () => {
   const dispatch = useDispatch()
-  const subreddit = useSelector(selectSubreddit)
-  const posts = useSelector(selectPosts)
-  const loading = useSelector(isLoading)
-  const error = useSelector(isError)
-  const { subredditName } = useParams()
+  const subredditInfo = useSelector(selectSubredditInfo)
+  const subredditData = useSelector(selectSubredditData)
+  const loading = useSelector(selectLoading)
+  const error = useSelector(selectError)
+  const { subreddit } = useParams()
   const reddit = 'reddit/'
 
   useEffect(() => {
-    !subredditName ? dispatch(fetchSubreddit(reddit)) : dispatch(fetchSubreddit(subredditName))
-  }, [dispatch, subredditName])
+    !subreddit ? dispatch(fetchSubreddit(reddit)) : dispatch(fetchSubreddit(subreddit))
+  }, [dispatch, subreddit])
  
   return (
     <div>
@@ -23,11 +23,11 @@ const Subreddit = () => {
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : (
+      ) : subredditInfo && (
         <>
-          <h2>{subreddit.subreddit}</h2>
-          <p>{subreddit.subreddit_name_prefixed}</p>
-          <Posts posts={posts} />
+          <h2>{subredditInfo.data.subreddit}</h2>
+          <p>{subredditInfo.data.subreddit_name_prefixed}</p>
+          <Posts posts={subredditData} />
         </>
       )}
     </div>

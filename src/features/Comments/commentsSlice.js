@@ -18,8 +18,8 @@ export const fetchComments = createAsyncThunk(
 )
 
 const initialState = {
-  postInfo: [],
-  comments: [],
+  subredditData: [],
+  commentsData: [],
   loading: false,
   error: null
 }
@@ -35,8 +35,8 @@ const commentsSlice = createSlice({
       })
       .addCase(fetchComments.fulfilled, (state, action) => {
         state.loading = false
-        state.postInfo = action.payload[0].data.children
-        state.comments = action.payload[1].data.children
+        state.subredditData= action.payload[0].data.children
+        state.commentsData = action.payload[1].data.children
       })
       .addCase(fetchComments.rejected, (state, action) => {
         state.loading = false
@@ -45,12 +45,12 @@ const commentsSlice = createSlice({
   }
 })
 
-export const selectPostInfo = state => state.comments.postInfo[0]
+export const selectSubredditData = state => state.comments.subredditData[0]
 
-export const selectComments = state => state.comments.comments
+export const selectCommentsData = state => state.comments.commentsData
 
-export const isLoading = state => state.comments.loading
+export const selectLoading = state => state.comments.loading
 
-export const isError = state => state.comments.error
+export const selectError = state => state.comments.error
 
 export default commentsSlice.reducer

@@ -4,7 +4,7 @@ export const fetchSubreddit = createAsyncThunk(
   'subreddit/fetchSubreddit',
   async (endpoint, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://www.reddit.com/${endpoint}.json`)
+      const response = await fetch(`https://www.reddit.com/r/${endpoint}.json`)
       const json = await response.json()
       if (response.status !== 200) {
         const errorMessage = `${response.status}`
@@ -18,7 +18,7 @@ export const fetchSubreddit = createAsyncThunk(
 )
 
 const initialState = {
-  posts: [],
+  subredditData: [],
   loading: false,
   error: null
 }
@@ -34,9 +34,7 @@ const subredditSlice = createSlice({
       })
       .addCase(fetchSubreddit.fulfilled, (state, action) => {
         state.loading = false
-        state.subreddit = action.payload.data.children[0].data.subreddit
-        state.subreddit_name_prefixed = action.payload.data.children[0].data.subreddit_name_prefixed
-        state.posts = action.payload.data.children
+        state.subredditData = action.payload.data.children
       })
       .addCase(fetchSubreddit.rejected, (state, action) => {
         state.loading = false
@@ -45,12 +43,12 @@ const subredditSlice = createSlice({
   }
 })
 
-export const selectSubreddit = state => state.subreddit
+export const selectSubredditInfo = state => state.subreddit.subredditData[0]
 
-export const isLoading = state => state.subreddit.loading
+export const selectSubredditData = state => state.subreddit.subredditData
 
-export const isError = state => state.subreddit.error
+export const selectLoading = state => state.subreddit.loading
 
-export const selectPostById = (state, postId) => state.subreddit.posts.find(post => post.data.id === postId)
+export const selectError = state => state.subreddit.error
 
 export default subredditSlice.reducer

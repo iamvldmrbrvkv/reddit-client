@@ -1,12 +1,26 @@
-import NavBar from "../components/NavBar/NavBar";
-import Feed from "../components/Feed/Feed";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  createRoutesFromElements,
+  Route
+} from "react-router-dom";
+import Root from "../components/Root/Root";
+import Subreddit from "../features/Subreddit/Subreddit/Subreddit";
+import FullPostWithComments from "../features/Comments/FullPostWithComments/FullPostWithComments";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Root />}>
+      <Route index element={<Subreddit />} />
+      <Route path="r/:subreddit" element={<Subreddit />} />
+      <Route path="r/:subreddit/comments/:id/:title" element={<FullPostWithComments />} />
+    </Route>
+  )
+)
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <Feed />
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

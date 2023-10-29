@@ -12,7 +12,7 @@ function Search() {
       }
       const query = createSearchParams(searchQuery)
       navigate({
-        pathname: '/search',
+        pathname: '/search/',
         search: `?${query}`
       })
     }

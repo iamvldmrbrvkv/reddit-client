@@ -4,7 +4,7 @@ export const fetchComments = createAsyncThunk(
   'comments/fethcComments',
   async (endpoint, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://www.reddit.com/${endpoint}.json`)
+      const response = await fetch(`https://www.reddit.com/${endpoint}/.json`)
       const json = await response.json()
       if (response.status !== 200) {
         const errorMessage = `${response.status}`

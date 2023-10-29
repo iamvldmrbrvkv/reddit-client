@@ -11,7 +11,7 @@ const Subreddit = () => {
   const loading = useSelector(selectLoading)
   const error = useSelector(selectError)
   const { subreddit } = useParams()
-  const reddit = 'reddit/'
+  const reddit = 'reddit'
 
   useEffect(() => {
     !subreddit ? dispatch(fetchSubreddit(reddit)) : dispatch(fetchSubreddit(subreddit))

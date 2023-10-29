@@ -14,7 +14,7 @@ const FullPostWithComments = () => {
   const { subreddit, id, title } = useParams()
 
   useEffect(() => {
-    const endpoint = `r/${subreddit}/comments/${id}/${title}/`
+    const endpoint = `r/${subreddit}/comments/${id}/${title}`
     dispatch(fetchComments(endpoint))
   }, [dispatch, id, subreddit, title])
 

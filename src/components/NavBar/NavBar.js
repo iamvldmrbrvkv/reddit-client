@@ -1,5 +1,5 @@
 import logo from '../../reddit-logo.png'
-import SearchReddit from "../SearchReddit/SearchReddit"
+import Search from '../Search/Search'
 import { NavLink } from 'react-router-dom'
 import styles from './NavBar.module.css'
 
@@ -42,7 +42,7 @@ function NavBar() {
       >
         r/bugs
       </NavLink>
-      <SearchReddit />
+      <Search />
     </div>
   )
 }

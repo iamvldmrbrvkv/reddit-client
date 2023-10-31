@@ -27,6 +27,7 @@ const FullPostWithComments = () => {
       ) : subredditData && (
         <>
           <Post post={subredditData} />
+          <h3>Comments</h3>
           <Comments comments={commentsData} />
         </>
       )}

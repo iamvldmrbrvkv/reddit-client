@@ -3,7 +3,7 @@ import Markdown from "react-markdown"
 const Comment = ({ comment }) => {
   return (
     <div>
-      <p>Posted by {comment.data.author}</p>
+      <p><b>{comment.data.author}</b></p>
       <Markdown>
         {comment.data.body}
       </Markdown>

@@ -26,7 +26,7 @@ const Subreddit = () => {
       ) : subredditInfo && (
         <>
           <h2>{subredditInfo.data.subreddit}</h2>
-          <p>{subredditInfo.data.subreddit_name_prefixed}</p>
+          <p><b>{subredditInfo.data.subreddit_name_prefixed}</b></p>
           <Posts posts={subredditData} />
         </>
       )}

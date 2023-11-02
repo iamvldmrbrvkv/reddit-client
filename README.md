@@ -30,7 +30,7 @@ For this project, you will build an application for Reddit using everything youâ
 - OPTIONAL: Set up a CI/CD workflow to automatically deploy your application when the master branch in the repository changes
 - OPTIONAL: Make your application a progressive web app
 
-### Prerequisites:
+## Prerequisites:
 - HTML
 - CSS
 - JavaScript

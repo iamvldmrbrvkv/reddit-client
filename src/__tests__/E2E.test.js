@@ -1,8 +1,8 @@
 import { Builder, By } from "selenium-webdriver";
 
-const driver = new Builder().forBrowser('safari').build()
+const driver = new Builder().forBrowser('chrome').build()
 
-beforeAll(async () => await driver.get('http://localhost:3000/'))
+beforeAll(async () => await driver.get('http://localhost:8888/'))
 
 afterAll(async () => await driver.quit())
 

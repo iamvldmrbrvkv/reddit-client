@@ -77,7 +77,7 @@
 
 ## API Endpoints
 
-### Получение постов суbreddit
+### Получение постов Subreddit
 ```javascript
 await redditAPI.getSubredditPosts('javascript', { limit: 25 })
 ```

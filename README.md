@@ -37,40 +37,49 @@ This project now uses the **official Reddit API** with OAuth authentication inst
    - Add environment variables: `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USER_AGENT`
    - Deploy automatically
 
+
 5. **Start local development**
    ```bash
    npm start
+   # или напрямую
+   netlify dev
    ```
+
+
+**Architecture:**
+- All requests to the Reddit API go through a Netlify Function (`/.netlify/functions/reddit-token`), which securely obtains the access_token and proxies requests.
+- Secrets are never exposed to client-side code.
+
+**Possible issues:**
+- If you get a 502/500 error when requesting a token, check your environment variables in Netlify and your local `.env` file.
+
 
 📖 **For detailed migration information, see [REDDIT_API_MIGRATION.md](./REDDIT_API_MIGRATION.md)**
 
-## Project Description
 
-For this project, you will build an application for Reddit using everything you've learned, including React and Redux. [Reddit](https://www.reddit.com/) is a website where people share links to articles, media and other things on the web. The Reddit API provides data which you will integrate into your application. The application will allow users to view and search posts and comments provided by the API.
+## Project Description
+This is a Reddit client built with React and Redux. It uses the official Reddit API via a secure Netlify serverless function for all data access. Users can view, search, and read posts and comments from Reddit. All authentication and API requests are handled server-side for security.
+
 
 ## ✨ Features
-
 - 🔍 **Search Reddit**: Search across all of Reddit or specific subreddits
-- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices  
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices
 - 💬 **View Comments**: Read post comments and discussions
 - 🚀 **Fast Loading**: Optimized API calls with proper caching
 - 🎨 **Clean UI**: Modern, user-friendly interface
-- 🔐 **Secure**: Uses official OAuth authentication
+- 🔐 **Secure**: Uses official OAuth authentication (token never exposed to client)
+
 
 ## 🛠 Technologies Used
-
 - **Frontend**: React 18, Redux Toolkit
 - **Routing**: React Router v6
 - **Styling**: CSS Modules
-- **API**: Official Reddit OAuth API with Netlify serverless functions
+- **API**: Official Reddit OAuth API (via Netlify serverless functions)
 - **Testing**: Jest, React Testing Library, Selenium WebDriver
 - **Build Tool**: Create React App
 - **Deployment**: Netlify with serverless functions
-[Codecademy](https://www.codecademy.com/learn) full stack engineer path portfolio project.
 
-For this project, you will build an application for Reddit using everything you’ve learned, including React and Redux. [Reddit](https://www.reddit.com/) is a website where people share links to articles, media and other things on the web. The Reddit API provides data which you will integrate into your application. The application will allow users to view and search posts and comments provided by the API.
-
-## Project Requirements:
+## Project Requirements (for learning):
 - Build the application using React and Redux
 - Version control your application with Git and host the repository on GitHub
 - Use a project management tool (GitHub Projects, Trello, etc.) to plan your work
@@ -108,7 +117,8 @@ For this project, you will build an application for Reddit using everything you�
 - Command line and file navigation
 - Wireframing
 
-# Getting Started with Create React App
+
+# Getting Started with Create React App (legacy info)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -116,28 +126,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `npm start` (now runs Netlify dev)
+Runs the app in the development mode with Netlify Functions. Open [http://localhost:8888](http://localhost:8888) to view it in your browser.
 
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+
 ### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the app for production to the `build` folder. Use Netlify for deployment to get serverless function support and secure API access.
 
 ### `npm run eject`
 
@@ -171,9 +171,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Deployment
+Deploy to Netlify for best results. All secrets and API credentials are managed server-side.
 
 ### `npm run build` fails to minify
 

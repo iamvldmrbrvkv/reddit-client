@@ -1,9 +1,6 @@
 // Reddit API service for official OAuth authentication
 class RedditAPI {
   constructor() {
-    this.clientId = process.env.REACT_APP_REDDIT_CLIENT_ID
-    this.clientSecret = process.env.REACT_APP_REDDIT_CLIENT_SECRET
-    this.userAgent = process.env.REACT_APP_REDDIT_USER_AGENT
     this.accessToken = null
     this.tokenExpiry = null
     this.baseURL = 'https://oauth.reddit.com'

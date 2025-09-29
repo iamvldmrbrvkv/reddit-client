@@ -2,7 +2,8 @@
 // Place this file in your project's root under /netlify/functions/
 // It will be deployed automatically by Netlify
 
-const fetch = require('node-fetch')
+
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
 
 exports.handler = async function(event, context) {
   const clientId = process.env.REDDIT_CLIENT_ID

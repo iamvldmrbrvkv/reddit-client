@@ -9,6 +9,19 @@ exports.handler = async function(event, context) {
   const clientSecret = process.env.REDDIT_CLIENT_SECRET
   const userAgent = process.env.REDDIT_USER_AGENT || 'YourApp/1.0 by YourUsername'
 
+  // Debug: log env values (do not log secrets in production!)
+  if (!clientId || !clientSecret || !userAgent) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: 'Missing environment variables',
+        clientId: !!clientId,
+        clientSecret: !!clientSecret,
+        userAgent: !!userAgent
+      })
+    }
+  }
+
   const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
 
   try {
@@ -23,9 +36,10 @@ exports.handler = async function(event, context) {
     })
 
     if (!response.ok) {
+      const text = await response.text()
       return {
         statusCode: response.status,
-        body: JSON.stringify({ error: 'Reddit token error', status: response.status })
+        body: JSON.stringify({ error: 'Reddit token error', status: response.status, details: text })
       }
     }
 
@@ -37,7 +51,7 @@ exports.handler = async function(event, context) {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      body: JSON.stringify({ error: error.message, stack: error.stack })
     }
   }
 }

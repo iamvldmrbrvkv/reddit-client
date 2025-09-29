@@ -11,12 +11,11 @@ const FullPostWithComments = () => {
   const commentsData = useSelector(selectCommentsData)
   const loading = useSelector(selectLoading)
   const error = useSelector(selectError)
-  const { subreddit, id, title } = useParams()
+  const { subreddit, id } = useParams()
 
   useEffect(() => {
-    const endpoint = `r/${subreddit}/comments/${id}/${title}`
-    dispatch(fetchComments(endpoint))
-  }, [dispatch, id, subreddit, title])
+    dispatch(fetchComments({ subreddit, postId: id }))
+  }, [dispatch, id, subreddit])
 
   return (
     <div>

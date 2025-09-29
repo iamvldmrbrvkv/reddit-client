@@ -1,4 +1,71 @@
 # reddit-client
+
+[Codecademy](https://www.codecademy.com/learn) full stack engineer path portfolio project.
+
+## 🚀 Major Update: Official Reddit API Integration
+
+This project now uses the **official Reddit API** with OAuth authentication instead of unofficial endpoints. This provides:
+
+- ✅ **Stable & Reliable**: Official API with proper support
+- ✅ **Higher Rate Limits**: 100 requests/minute vs heavily throttled anonymous access  
+- ✅ **Terms Compliance**: Follows Reddit's developer terms and guidelines
+- ✅ **Better Performance**: Authenticated requests with proper caching
+- ✅ **Future-Proof**: Access to new features and endpoints
+
+### 📋 Quick Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/reddit-client.git
+   cd reddit-client
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up Reddit API credentials**
+   - Go to https://www.reddit.com/prefs/apps
+   - Create a new "web app" 
+   - Add environment variables in Netlify dashboard (for production)
+   - Or create `.env` file locally (for development only)
+
+4. **Deploy to Netlify**
+   - Push code to GitHub
+   - Connect repository to Netlify
+   - Add environment variables: `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USER_AGENT`
+   - Deploy automatically
+
+5. **Start local development**
+   ```bash
+   npm start
+   ```
+
+📖 **For detailed migration information, see [REDDIT_API_MIGRATION.md](./REDDIT_API_MIGRATION.md)**
+
+## Project Description
+
+For this project, you will build an application for Reddit using everything you've learned, including React and Redux. [Reddit](https://www.reddit.com/) is a website where people share links to articles, media and other things on the web. The Reddit API provides data which you will integrate into your application. The application will allow users to view and search posts and comments provided by the API.
+
+## ✨ Features
+
+- 🔍 **Search Reddit**: Search across all of Reddit or specific subreddits
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices  
+- 💬 **View Comments**: Read post comments and discussions
+- 🚀 **Fast Loading**: Optimized API calls with proper caching
+- 🎨 **Clean UI**: Modern, user-friendly interface
+- 🔐 **Secure**: Uses official OAuth authentication
+
+## 🛠 Technologies Used
+
+- **Frontend**: React 18, Redux Toolkit
+- **Routing**: React Router v6
+- **Styling**: CSS Modules
+- **API**: Official Reddit OAuth API with Netlify serverless functions
+- **Testing**: Jest, React Testing Library, Selenium WebDriver
+- **Build Tool**: Create React App
+- **Deployment**: Netlify with serverless functions
 [Codecademy](https://www.codecademy.com/learn) full stack engineer path portfolio project.
 
 For this project, you will build an application for Reddit using everything you’ve learned, including React and Redux. [Reddit](https://www.reddit.com/) is a website where people share links to articles, media and other things on the web. The Reddit API provides data which you will integrate into your application. The application will allow users to view and search posts and comments provided by the API.

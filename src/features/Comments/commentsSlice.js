@@ -1,18 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import redditAPI from "../../services/redditAPI";
 
 export const fetchComments = createAsyncThunk(
   'comments/fethcComments',
-  async (endpoint, { rejectWithValue }) => {
+  async ({ subreddit, postId }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://www.reddit.com/${endpoint}.json`)
-      const json = await response.json()
-      if (response.status !== 200) {
-        const errorMessage = `${response.status}`
-        throw new Error(errorMessage)
-      }
+      const json = await redditAPI.getPostComments(subreddit, postId)
       return json
     } catch (err) {
-      return rejectWithValue(`${err.name}: ${err.errorMessage}`)
+      return rejectWithValue(`${err.name}: ${err.message}`)
     }
   }
 )

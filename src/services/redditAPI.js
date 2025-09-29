@@ -39,7 +39,6 @@ class RedditAPI {
         ...options,
         headers: {
           'Authorization': `bearer ${token}`,
-          'User-Agent': this.userAgent,
           ...options.headers
         }
       })

@@ -18,7 +18,7 @@ const Post = ({ post }) => {
         {post.data.selftext}
       </Markdown>
       {post.data.is_video === true ? (
-        <video src={post.data.media.reddit_video.fallback_url} controls autostart autoPlay muted playsInline className={styles.video}/>
+        <video src={post.data.media.reddit_video.fallback_url} controls autoPlay muted playsInline className={styles.video}/>
       ) : (
         <img src={post.data.url} alt="" className={styles.img}/>
       )}

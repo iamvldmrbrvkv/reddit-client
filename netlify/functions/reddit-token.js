@@ -5,7 +5,7 @@
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
 
-exports.handler = async function(event, context) {
+export async function handler(event, context) {
   const clientId = process.env.REDDIT_CLIENT_ID
   const clientSecret = process.env.REDDIT_CLIENT_SECRET
   const userAgent = process.env.REDDIT_USER_AGENT || 'YourApp/1.0 by YourUsername'

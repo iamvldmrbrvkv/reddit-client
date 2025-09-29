@@ -41,7 +41,7 @@ This project now uses the **official Reddit API** with OAuth authentication inst
 5. **Start local development**
    ```bash
    npm start
-   # или напрямую
+   # or directly
    netlify dev
    ```
 

@@ -1,110 +1,111 @@
-# Переход на официальное Reddit API
 
-## Что изменилось
+# Migration to Official Reddit API
 
-### 1. Аутентификация
-Теперь приложение использует официальное Reddit OAuth API вместо неофициальных JSON endpoints.
+## What Changed
 
-**Тип аутентификации**: Application-Only OAuth (не требует аутентификации пользователей)
-- Подходит для отображения постов без входа пользователя в систему
-- Использует Client Credentials Grant Flow
+### 1. Authentication
+The app now uses the official Reddit OAuth API instead of unofficial JSON endpoints.
 
-### 2. Структура проекта
+**Authentication type**: Application-Only OAuth (does not require user login)
+- Suitable for displaying posts without user authentication
+- Uses Client Credentials Grant Flow
 
-#### Новые файлы:
-- `src/services/redditAPI.js` - Сервис для работы с официальным Reddit API
-- `netlify/functions/reddit-token.js` - Serverless функция для безопасного получения токенов
+### 2. Project Structure
 
-#### Изменённые файлы:
-- `src/features/Subreddit/subredditSlice.js` - Обновлён для использования API сервиса
-- `src/features/Comments/commentsSlice.js` - Обновлён для использования API сервиса  
-- `src/features/SearchReddit/SearchReddit.js` - Обновлён для использования API сервиса
-- `src/features/Comments/FullPostWithComments/FullPostWithComments.js` - Упрощён интерфейс
+#### New files:
+- `src/services/redditAPI.js` - Service for working with the official Reddit API
+- `netlify/functions/reddit-token.js` - Serverless function for secure token retrieval
 
-#### Удалённые файлы:
-- `.env` и `.env.example` - Переменные окружения перенесены в Netlify
+#### Updated files:
+- `src/features/Subreddit/subredditSlice.js` - Updated to use the API service
+- `src/features/Comments/commentsSlice.js` - Updated to use the API service
+- `src/features/SearchReddit/SearchReddit.js` - Updated to use the API service
+- `src/features/Comments/FullPostWithComments/FullPostWithComments.js` - Simplified interface
 
-## Настройка
+#### Removed files:
+- `.env` and `.env.example` - Environment variables moved to Netlify
 
-### 1. Регистрация приложения Reddit
-1. Перейдите на https://www.reddit.com/prefs/apps
-2. Нажмите "are you a developer? create an app..."
-3. Выберите тип "web app"
-4. Заполните необходимые поля
-5. Получите Client ID и Client Secret
+## Setup
 
-### 2. Настройка Netlify serverless функций
-1. Разместите файл `netlify/functions/reddit-token.js` в проекте
-2. В настройках Netlify добавьте переменные окружения:
+### 1. Register a Reddit App
+1. Go to https://www.reddit.com/prefs/apps
+2. Click "are you a developer? create an app..."
+3. Choose "web app" type
+4. Fill in the required fields
+5. Get your Client ID and Client Secret
+
+### 2. Configure Netlify Serverless Functions
+1. Place `netlify/functions/reddit-token.js` in your project
+2. In the Netlify dashboard, add environment variables:
    ```
-   REDDIT_CLIENT_ID=ваш_client_id
-   REDDIT_CLIENT_SECRET=ваш_client_secret  
+   REDDIT_CLIENT_ID=your_client_id
+   REDDIT_CLIENT_SECRET=your_client_secret
    REDDIT_USER_AGENT=web:your-app-name:v1.0.0 (by /u/yourusername)
    ```
-3. Отметьте их как "Secret" для безопасности
-4. Разверните проект на Netlify
+3. Mark them as "Secret" for security
+4. Deploy the project to Netlify
 
-## Преимущества официального API
+## Benefits of the Official API
 
-### 1. Надёжность
-- Официально поддерживаемые endpoints
-- Стабильная структура ответов
-- Меньше вероятность внезапных изменений
+### 1. Reliability
+- Officially supported endpoints
+- Stable response structure
+- Less risk of sudden changes
 
-### 2. Производительность
-- Аутентифицированные запросы имеют более высокие лимиты
-- 100 запросов в минуту (по сравнению с сильно ограниченным анонимным доступом)
+### 2. Performance
+- Authenticated requests have higher rate limits
+- 100 requests per minute (compared to heavily limited anonymous access)
 
-### 3. Функциональность
-- Доступ к дополнительным endpoints
-- Лучшая обработка ошибок
-- Официальная документация
+### 3. Functionality
+- Access to additional endpoints
+- Better error handling
+- Official documentation
 
-### 4. Соответствие правилам
-- Соответствие Terms of Service Reddit
-- Правильная идентификация приложения через User-Agent
-- Отслеживание использования API
+### 4. Compliance
+- Follows Reddit Terms of Service
+- Proper app identification via User-Agent
+- API usage tracking
 
-## Rate Limits (Лимиты скорости)
+## Rate Limits
 
-Официальное API имеет лимиты:
-- **100 запросов в минуту** для аутентифицированных приложений
-- Лимиты усредняются за 10-минутное окно для поддержки всплесков запросов
-- Мониторинг через response headers:
-  - `X-Ratelimit-Used`: Использованные запросы  
-  - `X-Ratelimit-Remaining`: Оставшиеся запросы
-  - `X-Ratelimit-Reset`: Время до сброса
+The official API has the following limits:
+- **100 requests per minute** for authenticated apps
+- Limits are averaged over a 10-minute window to support burst traffic
+- Monitor via response headers:
+  - `X-Ratelimit-Used`: Requests used
+  - `X-Ratelimit-Remaining`: Requests remaining
+  - `X-Ratelimit-Reset`: Time until reset
 
 ## API Endpoints
 
-### Получение постов Subreddit
+### Fetching Subreddit Posts
 ```javascript
 await redditAPI.getSubredditPosts('javascript', { limit: 25 })
 ```
 
-### Получение комментариев поста
-```javascript  
+### Fetching Post Comments
+```javascript
 await redditAPI.getPostComments('javascript', 'abc123', { limit: 50 })
 ```
 
-### Поиск по Reddit
+### Searching Reddit
 ```javascript
-await redditAPI.searchReddit('react hooks', { 
-  limit: 25, 
+await redditAPI.searchReddit('react hooks', {
+  limit: 25,
   sort: 'relevance',
-  time: 'all' 
+  time: 'all'
 })
 ```
 
-## Безопасность
+## Security
 
-### Netlify serverless функции
-- Client Secret хранится только в переменных окружения Netlify
-- Токены получаются через serverless функцию `/.netlify/functions/reddit-token`
-- Секреты никогда не попадают в клиентский код
-- HTTPS соединение защищает все запросы
+### Netlify Serverless Functions
+- Client Secret is stored only in Netlify environment variables
+- Tokens are obtained via the serverless function `/.netlify/functions/reddit-token`
+- Secrets are never exposed to client code
+- HTTPS secures all requests
 
-### Архитектура безопасности
+### Security Architecture
 ```
 Browser → Netlify Function → Reddit API
                 ↑
@@ -112,39 +113,39 @@ Browser → Netlify Function → Reddit API
 ```
 
 ### User-Agent
-- Обязательное требование Reddit API
-- Должен содержать название приложения и контакт разработчика
-- Формат: `<platform>:<app ID>:<version string> (by /u/<reddit username>)`
+- Required by Reddit API
+- Must include app name and developer contact
+- Format: `<platform>:<app ID>:<version string> (by /u/<reddit username>)`
 
-## Устранение неполадок
+## Troubleshooting
 
-### Ошибки аутентификации
-- Проверьте правильность Client ID и Client Secret
-- Убедитесь что приложение зарегистрировано как "web app"
-- Проверьте формат User-Agent
+### Authentication Errors
+- Check your Client ID and Client Secret
+- Make sure your app is registered as a "web app"
+- Check the User-Agent format
 
-### CORS ошибки  
-- Reddit API правильно настроен для CORS
-- Если возникают проблемы, проверьте URL endpoints
+### CORS Errors
+- Reddit API is properly configured for CORS
+- If issues occur, check endpoint URLs
 
 ### Rate Limiting
-- Мониторьте заголовки ответов для отслеживания лимитов
-- Реализуйте задержки между запросами при необходимости
+- Monitor response headers for rate limit info
+- Implement delays between requests if needed
 
-## Дальнейшие улучшения
+## Further Improvements
 
-### Возможные добавления:
-1. **Кэширование токенов** - Сохранение токенов в localStorage
-2. **Retry механизм** - Автоматический повтор при ошибках
-3. **Пагинация** - Загрузка следующих страниц постов
-4. **Фильтрация** - Дополнительные параметры поиска
-5. **User Authentication** - Вход пользователей для персональных функций
+### Possible Additions:
+1. **Token caching** - Store tokens in localStorage
+2. **Retry mechanism** - Automatic retries on errors
+3. **Pagination** - Load next pages of posts
+4. **Filtering** - Additional search parameters
+5. **User Authentication** - User login for personalized features
 
-### Мониторинг производительности:
-- Отслеживание использования API лимитов
-- Кэширование часто запрашиваемых данных
-- Оптимизация количества запросов
+### Performance Monitoring:
+- Track API rate limit usage
+- Cache frequently requested data
+- Optimize the number of requests
 
-## Заключение
+## Conclusion
 
-Переход на официальное Reddit API делает ваше приложение более надёжным, производительным и соответствующим правилам платформы. Хотя требуется дополнительная настройка аутентификации, преимущества значительно перевешивают сложность внедрения.
+Migrating to the official Reddit API makes your app more reliable, performant, and compliant with platform rules. While authentication setup requires extra steps, the benefits far outweigh the complexity.

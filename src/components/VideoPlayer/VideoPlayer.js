@@ -76,7 +76,7 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
         // Create new player
         const player = videojs(videoRef.current, {
           controls: true,
-          autoplay: false, // Set to false initially to handle play() promise properly
+          autoplay: true, // Set to false initially to handle play() promise properly
           muted: mutedRef.current,
           preload: 'auto',
           playsinline: true,

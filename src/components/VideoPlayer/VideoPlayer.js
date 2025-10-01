@@ -6,7 +6,6 @@ import { CardMedia } from '@mui/material';
 function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true, muted = true }) {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
-  const playPromiseRef = useRef(null);
   const isMountedRef = useRef(true);
   const hasErrorRef = useRef(false);
   const [showFallback, setShowFallback] = useState(false);
@@ -76,7 +75,7 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
         // Create new player
         const player = videojs(videoRef.current, {
           controls: true,
-          autoplay: true, // Set to false initially to handle play() promise properly
+          autoplay: autoPlayRef.current,
           muted: mutedRef.current,
           preload: 'auto',
           playsinline: true,
@@ -97,38 +96,6 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
         player.on('error', () => {
           switchToFallback();
         });
-
-        // Handle autoplay properly with Promise
-        if (autoPlayRef.current) {
-          player.ready(() => {
-            // Check if still mounted before playing
-            if (!isMountedRef.current) {
-              return;
-            }
-
-            // Store the promise to prevent interruption
-            const playPromise = player.play();
-            
-            if (playPromise !== undefined) {
-              playPromiseRef.current = playPromise;
-              
-              playPromise
-                .then(() => {
-                  // Automatic playback started successfully
-                  if (isMountedRef.current) {
-                    playPromiseRef.current = null;
-                  }
-                })
-                .catch(() => {
-                  // Auto-play was prevented or interrupted
-                  // This is normal browser behavior, handle silently
-                  if (isMountedRef.current) {
-                    playPromiseRef.current = null;
-                  }
-                });
-            }
-          });
-        }
       } catch (error) {
         switchToFallback();
       }
@@ -139,22 +106,7 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
       clearTimeout(timer);
       isMountedRef.current = false;
       
-      // Wait for any pending play promise before disposing
-      if (playPromiseRef.current) {
-        playPromiseRef.current
-          .then(() => {
-            if (playerRef.current && !playerRef.current.isDisposed()) {
-              playerRef.current.dispose();
-              playerRef.current = null;
-            }
-          })
-          .catch(() => {
-            if (playerRef.current && !playerRef.current.isDisposed()) {
-              playerRef.current.dispose();
-              playerRef.current = null;
-            }
-          });
-      } else if (playerRef.current && !playerRef.current.isDisposed()) {
+      if (playerRef.current && !playerRef.current.isDisposed()) {
         try {
           playerRef.current.dispose();
         } catch (e) {

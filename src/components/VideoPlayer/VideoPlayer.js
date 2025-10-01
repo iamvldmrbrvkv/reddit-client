@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import { CardMedia } from '@mui/material';
@@ -24,12 +24,6 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
   fallbackUrlRef.current = fallbackUrl;
   dashUrlRef.current = dashUrl;
   hlsUrlRef.current = hlsUrl;
-  
-  // Detect Safari - memoize to avoid recalculation
-  const isSafari = useMemo(() => 
-    /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-    []
-  );
 
   // If there's no DASH or HLS - use fallback immediately (without video.js)
   const shouldUseFallback = !dashUrl && !hlsUrl;
@@ -73,10 +67,9 @@ function VideoPlayer({ dashUrl, hlsUrl, fallbackUrl, maxHeight, autoPlay = true,
       }
 
       try {
-        // Determine format based on browser:
-        // Safari - HLS (native support with audio)
-        // Others - DASH (more control)
-        const videoSource = isSafari && hlsUrlRef.current
+        // Use HLS for all browsers - DASH has issues in Chrome production builds
+        // HLS works well in all modern browsers with video.js
+        const videoSource = hlsUrlRef.current
           ? { src: hlsUrlRef.current, type: 'application/x-mpegURL' }
           : { src: dashUrlRef.current, type: 'application/dash+xml' };
 

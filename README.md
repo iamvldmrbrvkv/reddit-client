@@ -63,21 +63,36 @@ This is a Reddit client built with React and Redux. It uses the official Reddit 
 
 ## ✨ Features
 - 🔍 **Search Reddit**: Search across all of Reddit or specific subreddits
-- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile devices (breakpoints: xs, sm, md, lg, xl)
 - 💬 **View Comments**: Read post comments and discussions
 - 🚀 **Fast Loading**: Optimized API calls with proper caching
-- 🎨 **Clean UI**: Modern, user-friendly interface
+- 🎨 **Modern UI**: Material-UI components with Reddit-inspired design
+- 🌓 **Dark/Light Mode**: Automatic theme switching with localStorage persistence
 - 🔐 **Secure**: Uses official OAuth authentication (token never exposed to client)
+- ♿ **Accessible**: ARIA attributes, semantic HTML, keyboard navigation
+- 📊 **Voting Interface**: Upvote/downvote UI similar to Reddit
 
 
 ## 🛠 Technologies Used
 - **Frontend**: React 18, Redux Toolkit
 - **Routing**: React Router v6
-- **Styling**: CSS Modules
+- **UI Framework**: Material-UI (MUI) v5
+- **Styling**: Emotion (CSS-in-JS), MUI theming system
+- **Icons**: Material Icons
 - **API**: Official Reddit OAuth API (via Netlify serverless functions)
 - **Testing**: Jest, React Testing Library, Selenium WebDriver
 - **Build Tool**: Create React App
 - **Deployment**: Netlify with serverless functions
+
+## 🎨 Design System
+
+Modern Reddit-inspired design with clean, responsive interface:
+
+- **Theming**: Material-UI system with light/dark mode support
+- **Layout**: Card-based design with 16px rounded corners
+- **Colors**: Reddit palette (Orange #FF4500, Blue #0079D3)
+- **Voting**: Modern interface positioned in post footers
+- **Responsive**: Optimized for all screen sizes
 
 ## Project Requirements (for learning):
 - Build the application using React and Redux

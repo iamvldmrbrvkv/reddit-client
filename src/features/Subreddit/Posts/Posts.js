@@ -1,13 +1,14 @@
-import PostPreview from "../PostPreview/PostPreview"
+import PostPreview from '../PostPreview/PostPreview';
+import { Box } from '@mui/material';
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, isSearchResults = false }) => {
   return (
-    <div>
-      {posts.map(post => (
-        <PostPreview key={post.data.id} post={post} />
+    <Box>
+      {posts.map((post) => (
+        <PostPreview key={post.data.id} post={post} isSearchResults={isSearchResults} />
       ))}
-    </div>
-  )
-}
+    </Box>
+  );
+};
 
-export default Posts
+export default Posts;

@@ -1,13 +1,14 @@
-import Comment from "../Comment/Comment"
+import Comment from '../Comment/Comment';
+import { Box } from '@mui/material';
 
 const Comments = ({ comments }) => {
   return (
-    <div>
-      {comments.map(comment => (
+    <Box sx={{ mt: 2 }}>
+      {comments.map((comment) => (
         <Comment key={comment.data.id} comment={comment} />
       ))}
-    </div>
-  )
-}
+    </Box>
+  );
+};
 
-export default Comments
+export default Comments;

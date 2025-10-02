@@ -133,8 +133,8 @@ function NavBar() {
                     src={logo}
                     alt="Reddit logo"
                     sx={{
-                      height: 40,
-                      width: 40,
+                      height: 32,
+                      width: 32,
                     }}
                   />
                 </IconButton>
@@ -151,10 +151,10 @@ function NavBar() {
                     sx={{
                       fontWeight: 700,
                       fontSize: '1.5rem',
-                      color: 'text.primary',
+                      color: 'primary.main',
                     }}
                   >
-                    Reddit Client
+                    reddit client
                   </Box>
                 </Box>
               </Box>

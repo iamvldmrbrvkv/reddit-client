@@ -154,7 +154,7 @@ function NavBar() {
                       color: 'primary.main',
                     }}
                   >
-                    reddit client
+                    Reddit Client
                   </Box>
                 </Box>
               </Box>

@@ -54,117 +54,161 @@ function NavBar() {
       }}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton
-              component={NavLink}
-              to="/"
-              sx={{ p: 0, m: 0 }}
-            >
-              <Box
-                component="img"
-                src={logo}
-                alt="Reddit logo"
-                sx={{
-                  height: { xs: 32, md: 40 },
-                  width: { xs: 32, md: 40 },
-                }}
-              />
-            </IconButton>
-            <Box
-              component={NavLink}
-              to="/"
-              sx={{
-                textDecoration: 'none',
-                color: 'inherit',
-                display: { xs: 'none', sm: 'block' },
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  fontWeight: 700,
-                  fontSize: { sm: '1.25rem', md: '1.5rem' },
-                  color: 'text.primary',
-                }}
+        <Toolbar disableGutters sx={{ position: 'relative', justifyContent: 'space-between', gap: 1 }}>
+          {/* Mobile layout: Menu - Search - Logo */}
+          {isMobile ? (
+            <>
+              {/* Left: Menu button */}
+              <IconButton
+                onClick={handleMenuOpen}
+                sx={{ p: 1, pl: 0 }}
               >
-                Reddit Client
-              </Box>
-            </Box>
-          </Box>
-
-          {!isMobile && (
-            <Box sx={{ display: 'flex', gap: 1, mx: 2 }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.path}
-                  component={NavLink}
-                  to={item.path}
-                  sx={{
-                    position: 'relative',
-                    color: 'text.primary',
-                    textTransform: 'none',
-                    fontWeight: 600,
-                    '&.active': {
-                      color: 'primary.main',
-                    },
-                    '&.active::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: '2px',
-                      backgroundColor: 'primary.main',
-                    },
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </Box>
-          )}
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Search />
-            <Tooltip title={mode === 'dark' ? 'Light mode' : 'Dark mode'}>
-              <IconButton onClick={toggleTheme} color="inherit" sx={{ p: 0 }}>
-                {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            {isMobile && (
-              <>
+
+              {/* Center: Search */}
+              <Box sx={{ flex: 1 }}>
+                <Search fullWidth />
+              </Box>
+
+              {/* Right: Logo */}
+              <IconButton
+                component={NavLink}
+                to="/"
+                sx={{ p: 1, pr: 0 }}
+              >
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Reddit logo"
+                  sx={{
+                    height: 32,
+                    width: 32,
+                  }}
+                />
+              </IconButton>
+
+              {/* Menu */}
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                {navItems.map((item) => (
+                  <MenuItem
+                    key={item.path}
+                    component={NavLink}
+                    to={item.path}
+                    onClick={handleMenuClose}
+                    sx={{
+                      '&.active': {
+                        bgcolor: 'action.selected',
+                        color: 'primary.main',
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </MenuItem>
+                ))}
+                <MenuItem onClick={() => { toggleTheme(); handleMenuClose(); }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {mode === 'dark' ? <Brightness7Icon fontSize="small" /> : <Brightness4Icon fontSize="small" />}
+                    {mode === 'dark' ? 'Light mode' : 'Dark mode'}
+                  </Box>
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              {/* Desktop layout: Logo on left, Search absolutely centered, Links on right */}
+              {/* Left: Logo */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, zIndex: 2 }}>
                 <IconButton
-                  onClick={handleMenuOpen}
+                  component={NavLink}
+                  to="/"
                   sx={{ p: 0, m: 0 }}
                 >
-                  <MenuIcon />
+                  <Box
+                    component="img"
+                    src={logo}
+                    alt="Reddit logo"
+                    sx={{
+                      height: 40,
+                      width: 40,
+                    }}
+                  />
                 </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
+                <Box
+                  component={NavLink}
+                  to="/"
+                  sx={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
                 >
-                  {navItems.map((item) => (
-                    <MenuItem
-                      key={item.path}
-                      component={NavLink}
-                      to={item.path}
-                      onClick={handleMenuClose}
-                      sx={{
-                        '&.active': {
-                          bgcolor: 'action.selected',
-                          color: 'primary.main',
-                        },
-                      }}
-                    >
-                      {item.label}
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
-            )}
-          </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: '1.5rem',
+                      color: 'text.primary',
+                    }}
+                  >
+                    Reddit Client
+                  </Box>
+                </Box>
+              </Box>
+
+              {/* Center: Search - absolutely centered */}
+              <Box 
+                sx={{ 
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 1,
+                }}
+              >
+                <Search />
+              </Box>
+
+              {/* Right: Links + Theme button */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 0.5, lg: 1 }, zIndex: 2 }}>
+                {navItems.map((item) => (
+                  <Button
+                    key={item.path}
+                    component={NavLink}
+                    to={item.path}
+                    sx={{
+                      position: 'relative',
+                      color: 'text.primary',
+                      textTransform: 'none',
+                      fontWeight: 600,
+                      px: { md: 1, lg: 2 },
+                      '&.active': {
+                        color: 'primary.main',
+                      },
+                      '&.active::after': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: '2px',
+                        backgroundColor: 'primary.main',
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+                <Tooltip title={mode === 'dark' ? 'Light mode' : 'Dark mode'}>
+                  <IconButton onClick={toggleTheme} color="inherit" sx={{ p: 0 }}>
+                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

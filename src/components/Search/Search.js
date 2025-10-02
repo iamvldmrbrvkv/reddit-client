@@ -3,7 +3,7 @@ import { createSearchParams, useNavigate } from 'react-router-dom';
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-function Search() {
+function Search({ fullWidth = false }) {
   const navigate = useNavigate();
   const searchInputRef = useRef();
   
@@ -30,15 +30,16 @@ function Search() {
   };
 
   return (
-    <form onSubmit={onSearchHandler}>
+    <form onSubmit={onSearchHandler} style={{ width: fullWidth ? '100%' : 'auto' }}>
       <TextField
         inputRef={searchInputRef}
         type="search"
         placeholder="Search Reddit"
         size="small"
         variant="outlined"
+        fullWidth={fullWidth}
         sx={{
-          minWidth: { xs: '150px', sm: '250px', md: '300px' },
+          minWidth: fullWidth ? 'unset' : { xs: '150px', sm: '250px', md: '300px', lg: '536px' },
           '& .MuiOutlinedInput-root': {
             paddingLeft: '4px',
           },

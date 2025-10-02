@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import Hls from 'hls.js';
 import {
   Card,
   CardContent,
@@ -13,9 +14,39 @@ import {
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import VideoPlayer from '../../../components/VideoPlayer/VideoPlayer';
 
 const PostPreview = ({ post, isSearchResults = false }) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (post.data.is_video && post.data.media?.reddit_video?.hls_url && videoRef.current && !isSearchResults) {
+      const video = videoRef.current;
+      const hlsUrl = post.data.media.reddit_video.hls_url;
+
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = hlsUrl;
+      } 
+      else if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(hlsUrl);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.ERROR, (event, data) => {
+          if (data.fatal) {
+            console.error('HLS fatal error:', data);
+            if (post.data.media.reddit_video.fallback_url) {
+              video.src = post.data.media.reddit_video.fallback_url;
+            }
+          }
+        });
+
+        return () => {
+          hls.destroy();
+        };
+      }
+    }
+  }, [post.data.is_video, post.data.media, isSearchResults]);
+
   const getTitle = () => {
     let permalink = post.data.permalink.split('/').filter((item) => item !== '');
     return permalink[4];
@@ -23,13 +54,6 @@ const PostPreview = ({ post, isSearchResults = false }) => {
 
   const title = getTitle();
   const postLink = `/r/${post.data.subreddit}/comments/${post.data.id}/${title}/`;
-
-  // Memoize video URLs to prevent unnecessary re-renders
-  const videoUrls = useMemo(() => ({
-    dashUrl: post.data.media?.reddit_video?.dash_url,
-    hlsUrl: post.data.media?.reddit_video?.hls_url,
-    fallbackUrl: post.data.media?.reddit_video?.fallback_url,
-  }), [post.data.media?.reddit_video?.dash_url, post.data.media?.reddit_video?.hls_url, post.data.media?.reddit_video?.fallback_url]);
 
   const formatScore = (score) => {
     if (score >= 1000) {
@@ -107,23 +131,31 @@ const PostPreview = ({ post, isSearchResults = false }) => {
 
           {/* Media - only for non-search results */}
           {post.data.is_video === true && !isSearchResults ? (
-            // Show video player on regular pages
             <Box
               sx={{
                 width: '100%',
                 bgcolor: 'black',
                 borderRadius: 1,
                 overflow: 'hidden',
+                position: 'relative',
+                aspectRatio: post.data.media?.reddit_video?.width && post.data.media?.reddit_video?.height
+                  ? `${post.data.media.reddit_video.width} / ${post.data.media.reddit_video.height}`
+                  : '16 / 9',
+                maxHeight: '472px',
               }}
             >
-              <VideoPlayer
-                key={post.data.id}
-                dashUrl={videoUrls.dashUrl}
-                hlsUrl={videoUrls.hlsUrl}
-                fallbackUrl={videoUrls.fallbackUrl}
-                maxHeight="500px"
-                autoPlay={true}
-                muted={true}
+              <video 
+                ref={videoRef}
+                controls 
+                autoPlay 
+                muted 
+                playsInline
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  display: 'block',
+                  objectFit: 'contain' 
+                }}
               />
             </Box>
           ) : !isSearchResults && (() => {

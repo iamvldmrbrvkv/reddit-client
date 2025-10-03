@@ -122,7 +122,7 @@ function NavBar() {
             <>
               {/* Desktop layout: Logo on left, Search absolutely centered, Links on right */}
               {/* Left: Logo */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, zIndex: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <IconButton
                   component={NavLink}
                   to="/"
@@ -165,14 +165,13 @@ function NavBar() {
                   position: 'absolute',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  zIndex: 1,
                 }}
               >
                 <Search />
               </Box>
 
               {/* Right: Links + Theme button */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 0.5, lg: 1 }, zIndex: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: { md: 0.5, lg: 1 } }}>
                 {navItems.map((item) => (
                   <Button
                     key={item.path}

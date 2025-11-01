@@ -42,14 +42,17 @@ function Search({ fullWidth = false }) {
           minWidth: fullWidth ? 'unset' : { xs: '150px', sm: '250px', md: '300px', lg: '536px' },
           '& .MuiOutlinedInput-root': {
             paddingLeft: '4px',
+            bgcolor: 'background.paper',
           },
           '& .MuiInputBase-input': {
-            fontSize: { xs: '16px', sm: '14px' }, // 16px on mobile to avoid auto-zoom in iOS
+            fontSize: { xs: '16px', sm: '14px' },
+            color: 'text.primary',
           },
           '& .MuiInputBase-input::placeholder': {
-            fontSize: { xs: '16px', sm: '14px' }, // Placeholder must also be 16px
+            fontSize: { xs: '16px', sm: '14px' },
+            color: 'text.secondary',
+            opacity: 1,
           },
-          // Styles for browser autofill
           '& .MuiInputBase-input:-webkit-autofill': {
             WebkitBoxShadow: (theme) => `0 0 0 100px ${theme.palette.background.paper} inset`,
             WebkitTextFillColor: (theme) => theme.palette.text.primary,

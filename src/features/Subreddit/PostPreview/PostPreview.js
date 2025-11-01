@@ -23,10 +23,7 @@ const PostPreview = ({ post, isSearchResults = false }) => {
       const video = videoRef.current;
       const hlsUrl = post.data.media.reddit_video.hls_url;
 
-      if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = hlsUrl;
-      } 
-      else if (Hls.isSupported()) {
+      if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(hlsUrl);
         hls.attachMedia(video);
@@ -43,6 +40,8 @@ const PostPreview = ({ post, isSearchResults = false }) => {
         return () => {
           hls.destroy();
         };
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = hlsUrl;
       }
     }
   }, [post.data.is_video, post.data.media, isSearchResults]);
